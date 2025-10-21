@@ -6,7 +6,8 @@ from sqlalchemy import (
     String,
     ForeignKey,
     DateTime,
-    SmallInteger
+    SmallInteger,
+    Float
 )
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
@@ -33,6 +34,16 @@ class Activity(Base):
     )
 
 
+class Building(Base):
+    __tablename__ = "buildings"
+    building_id: Mapped[int] = mapped_column(
+        Integer, primary_key=True, autoincrement=True
+    )
+    address: Mapped[str] = mapped_column(String(255), nullable=False)
+    latitude: Mapped[float] = mapped_column(Float, nullable=False)
+    longitude: Mapped[float] = mapped_column(Float, nullable=False)
+
+
 class Organization(Base):
     __tablename__ = "organizations"
 
@@ -44,7 +55,7 @@ class Organization(Base):
     title: Mapped[str] = mapped_column(String(255), nullable=False, index=True)
     building_id: Mapped[int] = mapped_column(
         Integer, ForeignKey(
-            "buildings.id", ondelete="RESTRICT"
+            "buildings.building_id", ondelete="RESTRICT"
         ),
         nullable=False
     )
