@@ -1,0 +1,25 @@
+[project]
+name = "app"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "AndreyFinyak",email = "afinyak@yahoo.com"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi[standard] (>=0.119.1,<0.120.0)",
+    "dependency-injector (>=4.48.2,<5.0.0)",
+    "sqlalchemy (>=2.0.44,<3.0.0)",
+    "pytest (>=8.4.2,<9.0.0)",
+    "alembic (>=1.17.0,<2.0.0)",
+    "uvicorn[standard] (>=0.38.0,<0.39.0)"
+]
+
+[tool.poetry]
+packages = [{include = "app", from = "src"}]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
