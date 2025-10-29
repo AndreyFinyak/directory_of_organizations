@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from app.domain.dto import ActivityDTO, BuildingDTO, OrganizationDTO, PhoneDTO
+
 from sqlalchemy.ext.asyncio import AsyncAttrs
 from sqlalchemy import (
     Integer,
@@ -33,6 +35,15 @@ class Activity(Base):
         DateTime, timezone=True, default=datetime.utcnow()
     )
 
+    def to_dto(self) -> ActivityDTO:
+        return ActivityDTO(
+            activity_id=self.activity_id,
+            name=self.name,
+            parent_id=self.parent_id,
+            level=self.level,
+            created_at=self.created_at,
+        )
+
 
 class Building(Base):
     __tablename__ = "buildings"
@@ -42,6 +53,14 @@ class Building(Base):
     address: Mapped[str] = mapped_column(String(255), nullable=False)
     latitude: Mapped[float] = mapped_column(Float, nullable=False)
     longitude: Mapped[float] = mapped_column(Float, nullable=False)
+
+    def to_dto(self) -> BuildingDTO:
+        return BuildingDTO(
+            building_id=self.building_id,
+            address=self.address,
+            latitude=self.latitude,
+            longitude=self.longitude,
+        )
 
 
 class Organization(Base):
@@ -65,6 +84,14 @@ class Organization(Base):
 
     building = relationship("Building", back_populates="organizations")
 
+    def to_dto(self) -> OrganizationDTO:
+        return OrganizationDTO(
+            organization_id=self.organization_id,
+            title=self.title,
+            building_id=self.building_id,
+            created_at=self.created_at,
+        )
+
 
 class Phone(Base):
     __tablename__ = "organization_phones"
@@ -76,3 +103,10 @@ class Phone(Base):
         nullable=False,
     )
     phone: Mapped[str] = mapped_column(String(50), nullable=False)
+
+    def to_dto(self) -> PhoneDTO:
+        return PhoneDTO(
+            phone_id=self.phone_id,
+            organization_id=self.organization_id,
+            phone=self.phone,
+        )

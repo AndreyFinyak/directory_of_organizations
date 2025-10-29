@@ -1,27 +1,35 @@
+from datetime import datetime
 from dataclasses import dataclass
 
 
 @dataclass
-class Organization:
+class OrganizationDTO:
     title: str
-    id: int | None = None
+    organization_id: int | None = None
+    building_id: int | None = None
+    created_at: datetime | None = None
 
 
 @dataclass
-class Building:
+class BuildingDTO:
     address: str
     latitude: float
     longitude: float
-    id: int | None = None
+    building_id: int | None = None
 
 
 @dataclass
-class Phone:
-    number: str
-    id: int | None = None
+class PhoneDTO:
+    phone: str
+    phone_id: int | None = None
+    organization_id: int | None = None
 
 
 @dataclass
-class Activity:
+class ActivityDTO:
     name: str
     id: int | None = None
+    activity_id: int | None = None
+    parent_id: int | None = None
+    level: int | None = None
+    created_at: datetime | None = None
